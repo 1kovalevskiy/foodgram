@@ -21,5 +21,6 @@ urlpatterns = [
     path("api/jet/dashboard/", include("jet.dashboard.urls", "jet-dashboard")),
     path('api/admin/', admin.site.urls),
     path('api/', include('users.urls', namespace='authentication')),
+    path('api/', include('tags.urls', namespace='tags')),
 
 ]
