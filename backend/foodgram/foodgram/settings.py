@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'users',
     'ingredients',
     'tags',
-    'recipes'
+    'recipes',
+    'colorfield'
 ]
 
 MIDDLEWARE = [
