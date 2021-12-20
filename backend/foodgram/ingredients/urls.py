@@ -1,13 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from tags.views import TagViewSet
+from ingredients.views import IngredientViewSet
 
 
-app_name = 'tag'
+app_name = 'ingredients'
 
 router = SimpleRouter()
-router.register(r'tags', TagViewSet, basename='tags')
+router.register(r'ingredients', IngredientViewSet, basename='ingredients')
 
 urlpatterns = [
     path(r'', include(router.urls)),
