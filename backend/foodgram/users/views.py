@@ -1,21 +1,23 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AnonymousUser
-from django.shortcuts import get_object_or_404
+from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from djoser.views import TokenCreateView
 
 from users.serializers import UserSerializer, PasswordSerializer
 
 User = get_user_model()
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # lookup_field = 'username'
-    # permission_classes = (IsAdmin,)
+
 
 
 @api_view(['GET'])
