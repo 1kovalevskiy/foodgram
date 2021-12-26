@@ -82,3 +82,18 @@ class FavoritedRecipe(models.Model):
 
     def __repr__(self):
         return f'{self.user.username[:15]} -> {self.recipe.name[:15]}'
+
+
+class ShoppingRecipe(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='shopping'
+    )
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name='shopped_user'
+    )
+
+    def __str__(self):
+        return f'{self.user.username[:15]} -> {self.recipe.name[:15]}'
+
+    def __repr__(self):
+        return f'{self.user.username[:15]} -> {self.recipe.name[:15]}'
