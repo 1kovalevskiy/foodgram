@@ -1,8 +1,10 @@
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import get_object_or_404
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
-from recipes.models import Recipe, RecipeTags, RecipeIngredients
+from recipes.models import Recipe, RecipeTags, RecipeIngredients, \
+    FavoritedRecipe, ShoppingRecipe
 from tags.models import Tag
 from ingredients.models import Ingredients
 from users.serializers import UserSerializer
@@ -38,8 +40,8 @@ class RecipeSerializer(serializers.ModelSerializer):
          many=True, read_only=True)
     author = UserSerializer(read_only=True)
     image = Base64ImageField()
-    # is_favorited =
-    # is_in_shopping_cart =
+    is_favorited = serializers.SerializerMethodField()
+    is_in_shopping_cart = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
@@ -52,7 +54,33 @@ class RecipeSerializer(serializers.ModelSerializer):
             'cooking_time',
             'image',
             'author',
+            'is_favorited',
+            'is_in_shopping_cart'
         )
+
+    def get_is_favorited(self, obj):
+        request = self.context.get('request')
+        try:
+            user = request.user
+        except AttributeError:
+            return False
+        if isinstance(user, AnonymousUser):
+            return False
+        elif FavoritedRecipe.objects.filter(user=user, recipe=obj).exists():
+            return True
+        return False
+
+    def get_is_in_shopping_cart(self, obj):
+        request = self.context.get('request')
+        try:
+            user = request.user
+        except AttributeError:
+            return False
+        if isinstance(user, AnonymousUser):
+            return False
+        elif ShoppingRecipe.objects.filter(user=user, recipe=obj).exists():
+            return True
+        return False
 
     def create(self, validated_data):
         tags = self.initial_data.get('tags')

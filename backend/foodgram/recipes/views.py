@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
@@ -75,3 +75,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
             shopping.delete()
             return Response(status=204)
         return Response(status=401)
+
+
+@api_view(['GET'])
+def download_shopping_cart(request):
+    if request.user.is_anonymous:
+        return Response(status=401)
+
+    return Response(serializer.data)

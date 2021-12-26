@@ -74,7 +74,7 @@ class FavoritedRecipe(models.Model):
         User, on_delete=models.CASCADE, related_name='favorited'
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name='favorided_user'
+        Recipe, on_delete=models.CASCADE, related_name='favorited_user'
     )
 
     def __str__(self):
