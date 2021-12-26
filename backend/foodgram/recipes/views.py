@@ -11,7 +11,7 @@ from recipes.models import Recipe, RecipeTags, RecipeIngredients, \
     FavoritedRecipe
 from recipes.searches import CustomFilter
 from recipes.serializers import RecipeSerializer
-
+from users.serializers import RecipesMiniSerializer
 
 User = get_user_model()
 
@@ -33,15 +33,22 @@ class RecipeViewSet(viewsets.ModelViewSet):
         instance.delete()
 
     @action(methods=['get', 'delete'], detail=True)
-    def subscribe(self, request, pk=None):
+    def favorite(self, request, pk=None):
         if request.user.is_anonymous:
             return Response(status=401)
         user = get_object_or_404(User, username=request.user)
         recipe = get_object_or_404(Recipe, pk=pk)
         if request.method == 'GET':
             if FavoritedRecipe.objects.filter(user=user, recipe=recipe).exists():
-                return Response({'errors': 'Already subscribed'}, status=400)
-            pass
+                return Response({'errors': 'Already favorite'}, status=400)
+            favorite = FavoritedRecipe.objects.create(user=user, recipe=recipe)
+            response = RecipesMiniSerializer(favorite.recipe)
+            return Response(response.data, status=201)
         elif request.method == 'DELETE':
-            pass
+            favorite = FavoritedRecipe.objects.filter(user=user, recipe=recipe)
+            if not favorite.exists():
+                return Response(
+                    {'errors': "You are not favorite"}, status=400)
+            favorite.delete()
+            return Response(status=204)
         return Response(status=401)

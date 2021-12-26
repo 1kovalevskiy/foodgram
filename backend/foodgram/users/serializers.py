@@ -60,7 +60,7 @@ class PasswordSerializer(serializers.Serializer):
         return value
 
 
-class SubscriptionsRecipesSerializer(serializers.ModelSerializer):
+class RecipesMiniSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
@@ -74,9 +74,9 @@ class SubscribeSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='author.first_name', read_only=True)
     last_name = serializers.CharField(source='author.last_name', read_only=True)
     is_subscribed = serializers.SerializerMethodField()
-    recipes = SubscriptionsRecipesSerializer(source='author.recipes',
-                                             read_only=True,
-                                             many=True)
+    recipes = RecipesMiniSerializer(source='author.recipes',
+                                    read_only=True,
+                                    many=True)
     recipes_count = serializers.SerializerMethodField()
 
     class Meta:
