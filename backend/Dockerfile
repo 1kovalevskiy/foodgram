@@ -4,7 +4,8 @@ RUN pip install -r requirements.txt
 WORKDIR /foodgram
 COPY . /
 #CMD python manage.py runserver 0.0.0.0:8000
-CMD ["gunicorn", "foodgram.wsgi:application", "--port 8000"]
+#CMD ["gunicorn", "foodgram.wsgi:application", "--bind 0.0.0.0:8000"]
+CMD gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
 #
 #FROM snakepacker/python:all as builder
 #RUN python3.9 -m venv /usr/share/python3/app

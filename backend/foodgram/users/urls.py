@@ -1,13 +1,16 @@
 from django.urls import include, path
 
-from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework.routers import SimpleRouter
 
-from users.views import UserViewSet, me_view, set_password
+from users.views import UserViewSet, me_view, set_password, SubscriptionsViewSet
 
 app_name = 'authentication'
 
 
 router_v1 = SimpleRouter()
+router_v1.register(
+    r'users/subscriptions', SubscriptionsViewSet, basename='subscriptions'
+)
 router_v1.register(r'users', UserViewSet, basename='users')
 
 urlpatterns = [

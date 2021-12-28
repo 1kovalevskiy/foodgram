@@ -3,6 +3,7 @@ version: '3.3'
 volumes:
   postgres_data:
   static_value:
+  media_value:
 
 
 services:
@@ -22,5 +23,7 @@ services:
       - ../frontend/build:/usr/share/nginx/html/
       - ../docs:/usr/share/nginx/html/api/docs
       - ../backend/foodgram/static:/usr/share/nginx/html/api/static
+      - ../backend/foodgram/media:/usr/share/nginx/html/media
+
 
 
