@@ -8,8 +8,8 @@ from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 
 from foodgram.paginations import DefaultResultsSetPagination
-from recipes.models import Recipe, RecipeTags, RecipeIngredients, \
-    FavoritedRecipe, ShoppingRecipe
+from recipes.models import (Recipe, RecipeTags, RecipeIngredients,
+                            FavoritedRecipe, ShoppingRecipe)
 from recipes.searches import CustomFilter
 from recipes.serializers import RecipeSerializer
 from users.serializers import RecipesMiniSerializer

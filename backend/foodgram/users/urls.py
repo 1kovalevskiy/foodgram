@@ -2,8 +2,8 @@ from django.urls import include, path
 
 from rest_framework.routers import SimpleRouter
 
-from users.views import UserViewSet, me_view, set_password,\
-    SubscriptionsViewSet
+from users.views import (UserViewSet, me_view, set_password,
+                         SubscriptionsViewSet)
 
 app_name = 'authentication'
 

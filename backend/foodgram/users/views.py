@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from users.models import Follow
-from users.serializers import UserSerializer, PasswordSerializer, \
-    SubscribeSerializer
+from users.serializers import (UserSerializer, PasswordSerializer,
+                               SubscribeSerializer)
 
 User = get_user_model()
 
@@ -83,5 +83,4 @@ class SubscriptionsViewSet(
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.request.user)
-        queryset = Follow.objects.filter(user=user)
-        return queryset
+        return Follow.objects.filter(user=user)
