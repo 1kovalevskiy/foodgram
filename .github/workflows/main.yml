@@ -27,9 +27,9 @@ jobs:
         # запуск проверки проекта по flake8
         python -m flake8
         # перейти в папку, содержащую manage.py - <корневая_папка>/<папка_проекта>/manage.py
-        cd infra_project/
+        # cd infra_project/
         # запустить написанные разработчиком тесты
-        python manage.py test
+        # python manage.py test
         
         
   build_and_push_to_docker_hub:
@@ -50,7 +50,8 @@ jobs:
         uses: docker/build-push-action@v2 # Выполняет push образа в DockerHub 
         with:
           push: true
-          tags: 1kovalevskiy/infra_actions:latest
+          tags: 1kovalevskiy/foodgram:latest
+
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
@@ -68,3 +69,13 @@ jobs:
           #остановка всех контейнеров
           sudo docker stop $(sudo docker ps -a -q)
           sudo docker run --rm -d -p 5000:5000 1kovalevskiy/infra_actions
+  send_message:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ github.workflow }} успешно выполнен!
