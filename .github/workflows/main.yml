@@ -56,7 +56,9 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_ID }} --password-stdin
       - uses: actions/checkout@master
       - name: Build image
-        run: docker build -t 1kovalevskiy/foodgram_web:latest -f Dockerfile ./backend
+        run: |
+          cd backend/
+          docker build -t 1kovalevskiy/foodgram_web:latest -f Dockerfile .
       - name: Push image to docker.io
         run: docker push 1kovalevskiy/foodgram_web:latest
 
