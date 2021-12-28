@@ -1,9 +1,11 @@
+import csv
+import io
+from django.http import FileResponse, HttpResponse
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action, api_view
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from foodgram.paginations import DefaultResultsSetPagination
@@ -13,7 +15,9 @@ from recipes.searches import CustomFilter
 from recipes.serializers import RecipeSerializer
 from users.serializers import RecipesMiniSerializer
 
+
 User = get_user_model()
+
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
@@ -81,5 +85,24 @@ class RecipeViewSet(viewsets.ModelViewSet):
 def download_shopping_cart(request):
     if request.user.is_anonymous:
         return Response(status=401)
-
-    return Response(serializer.data)
+    user = get_object_or_404(User, username=request.user)
+    response_dict = {}
+    ingredients = get_list_or_404(
+        RecipeIngredients, recipe__shopped_user__user=user)
+    for i in ingredients:
+        name = f"{i.ingredient.name}, {i.ingredient.measurement_unit}"
+        if response_dict.get(name) is None:
+            response_dict[name] = int(i.amount)
+        elif response_dict.get(name):
+            response_dict[name] += int(i.amount)
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={
+            'Content-Disposition': f'attachment; filename="'
+                                   f'{request.user.username}.csv"'},
+    )
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response)
+    for key, value in response_dict.items():
+        writer.writerow([key, value])
+    return response
