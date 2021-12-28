@@ -3,8 +3,10 @@ from django.contrib import admin
 
 from ingredients.models import Ingredients
 
+
 class SiteAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Ingredients)
 class UserAdmin(SiteAdmin):

@@ -3,8 +3,10 @@ from django.contrib import admin
 
 from tags.models import Tag
 
+
 class SiteAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Tag)
 class UserAdmin(SiteAdmin):

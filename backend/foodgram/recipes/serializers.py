@@ -36,8 +36,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     tags = RecipeTagSerializer(many=True, read_only=True)
-    ingredients = RecipeIngredientSerializer(
-         many=True, read_only=True)
+    ingredients = RecipeIngredientSerializer(many=True, read_only=True)
     author = UserSerializer(read_only=True)
     image = Base64ImageField()
     is_favorited = serializers.SerializerMethodField()
@@ -120,4 +119,3 @@ class RecipeSerializer(serializers.ModelSerializer):
                 recipe=instance, ingredient=ingredient_id, amount=amount
             )
         return instance
-

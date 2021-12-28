@@ -3,8 +3,10 @@ from django.contrib import admin
 
 from recipes.models import Recipe, RecipeTags, RecipeIngredients
 
+
 class SiteAdmin(admin.ModelAdmin):
     pass
+
 
 @admin.register(Recipe)
 class RecipeAdmin(SiteAdmin):

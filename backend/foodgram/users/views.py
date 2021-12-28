@@ -49,7 +49,6 @@ class UserViewSet(
         return Response(status=400)
 
 
-
 @api_view(['GET'])
 def me_view(request):
     if request.user.is_anonymous:

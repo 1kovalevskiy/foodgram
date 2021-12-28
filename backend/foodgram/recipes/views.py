@@ -1,6 +1,5 @@
 import csv
-import io
-from django.http import FileResponse, HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django_filters.rest_framework import DjangoFilterBackend
@@ -43,7 +42,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(User, username=request.user)
         recipe = get_object_or_404(Recipe, pk=pk)
         if request.method == 'GET':
-            if FavoritedRecipe.objects.filter(user=user, recipe=recipe).exists():
+            if FavoritedRecipe.objects.filter(
+                    user=user, recipe=recipe
+            ).exists():
                 return Response({'errors': 'Already favorite'}, status=400)
             favorite = FavoritedRecipe.objects.create(user=user, recipe=recipe)
             response = RecipesMiniSerializer(favorite.recipe)
