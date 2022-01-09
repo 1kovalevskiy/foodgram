@@ -91,6 +91,7 @@ jobs:
         script: |
           git pull
           sudo docker stop $(sudo docker ps -a -q)
+          sudo docker kill $(sudo docker ps -a -q)
           cd /home/1kovalevskiy/foodgram-project-react/infra
           sudo docker-compose up -d
 
