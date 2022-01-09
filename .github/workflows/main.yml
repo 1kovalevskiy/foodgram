@@ -92,8 +92,8 @@ jobs:
           git pull
           sudo docker stop $(sudo docker ps -a -q)
           sudo docker kill $(sudo docker ps -a -q)
-          cd /home/1kovalevskiy/foodgram-project-react/infra
-          sudo docker-compose up -d -f /home/1kovalevskiy/foodgram-project-react/infra/docker-compose.yml
+          cd /home/kovalevskiyn/foodgram-project-react/infra
+          sudo docker-compose up -d
 
   send_message:
     runs-on: ubuntu-latest
