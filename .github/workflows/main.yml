@@ -8,26 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: coverage.py badge
-      uses: tj-actions/coverage-badge-py@v1.6
-    - name: Verify Changed files
-      uses: tj-actions/verify-changed-files@v6
-      id: changed_files
-      with:
-        files: coverage.svg
-    - name: Commit files
-      if: steps.changed_files.outputs.files_changed == 'true'
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add coverage.svg
-        git commit -m "Updated coverage.svg"
-    - name: Push changes
-      if: steps.changed_files.outputs.files_changed == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB1_TOKEN }}
-        branch: ${{ github.ref }}
+
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -56,6 +37,26 @@ jobs:
       run: |
         # запустить написанные разработчиком тесты
         python -m pytest
+    - name: coverage.py badge
+      uses: tj-actions/coverage-badge-py@v1.6
+    - name: Verify Changed files
+      uses: tj-actions/verify-changed-files@v6
+      id: changed_files
+      with:
+        files: coverage.svg
+    - name: Commit files
+      if: steps.changed_files.outputs.files_changed == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add coverage.svg
+        git commit -m "Updated coverage.svg"
+    - name: Push changes
+      if: steps.changed_files.outputs.files_changed == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB1_TOKEN }}
+        branch: ${{ github.ref }}
 
 
 
