@@ -1,4 +1,4 @@
-name: Foodgram-workflow
+name: CI
 
 on: [push]
 
