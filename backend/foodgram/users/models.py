@@ -11,6 +11,8 @@ class User(AbstractUser):
     class Meta:
         swappable = 'AUTH_USER_MODEL'
         unique_together = ('email', 'username')
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
 
 class Follow(models.Model):
@@ -30,9 +32,11 @@ class Follow(models.Model):
                 check=~models.Q(user=models.F("author")),
             ),
         ]
+        verbose_name = "follow_user"
+        verbose_name_plural = "follow_users"
 
     def __str__(self):
-        return (self.user.username[:15] + '-->' + self.author.username[:15])
+        return self.user.username[:15] + '-->' + self.author.username[:15]
 
     def __repr__(self):
-        return (self.user.username[:15] + '-->' + self.author.username[:15])
+        return self.user.username[:15] + '-->' + self.author.username[:15]

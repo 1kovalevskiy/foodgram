@@ -1,7 +1,9 @@
 from django.contrib.auth.models import AnonymousUser
+from django.http import QueryDict
 from django.shortcuts import get_object_or_404
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
+from rest_framework.exceptions import NotAuthenticated
 
 from recipes.models import (Recipe, RecipeTags, RecipeIngredients,
                             FavoritedRecipe, ShoppingRecipe)
@@ -82,13 +84,18 @@ class RecipeSerializer(serializers.ModelSerializer):
         return False
 
     def create(self, validated_data):
-        tags = self.initial_data.get('tags')
-        ingredients = self.initial_data.get('ingredients')
+        if isinstance(validated_data.get('author'), AnonymousUser):
+            raise NotAuthenticated
+        initial_data = self.initial_data
+        tags = initial_data.get('tags')
+        ingredients = initial_data.get('ingredients')
         recipe = Recipe.objects.create(**validated_data)
         for tag in tags:
             tag = get_object_or_404(Tag, id=tag)
             RecipeTags.objects.create(recipe=recipe, tag=tag)
         for ingredient in ingredients:
+            if isinstance(ingredient, str):
+                ingredient = eval(ingredient)
             id = ingredient.get('id')
             amount = ingredient.get('amount')
             ingredient_id = get_object_or_404(Ingredients, id=id)

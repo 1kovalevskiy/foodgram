@@ -31,6 +31,10 @@ jobs:
         # cd infra_project/
         # запустить написанные разработчиком тесты
         # python manage.py test
+    - name: Test with  django tests
+      run: |
+        # запустить написанные разработчиком тесты
+        python -m pytest
 
 
   build_and_push_to_docker_hub:
