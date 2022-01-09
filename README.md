@@ -8,12 +8,16 @@
 
 [Дизайн-проект фронта](https://www.figma.com/file/HHEJ68zF1bCa7Dx8ZsGxFh/%D0%9F%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D0%BD%D0%B8%D0%BA-(Final)?node-id=0%3A1)
 
+## Deploy
+В папке `infra` запустить `docker-compose up -d`
+
 ## Технологии
 - Готовый "фронт" на React
 - API на "Django + DRF"
 - Тестирование на "Pytest + pytest-django"
 - БД PostgreSQL
 - Proxy Nginx
+- Контейнеризация с помощью Docker
 
 ## Покрытие тестами
 [![](https://github.com/1kovalevskiy/foodgram-project-react/blob/master/pytest.png)](https://github.com/1kovalevskiy/foodgram-project-react/blob/master/pytest.pnghttp://)
