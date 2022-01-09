@@ -11,6 +11,9 @@
 ## Deploy
 В папке `infra` запустить `docker-compose up -d`
 
+## Тестовый сервер
+[Тестовый сервер](http://kovalevskiy.works)
+
 ## Технологии
 - Готовый "фронт" на React
 - API на "Django + DRF"
