@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-if os.getenv('DB_ENGINE', None) is None and DEBUG is True:
+if os.getenv('DB_ENGINE', None) is None:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
