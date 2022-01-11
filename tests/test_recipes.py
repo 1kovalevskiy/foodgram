@@ -2,7 +2,7 @@ import pytest
 from rest_framework.reverse import reverse
 from http import HTTPStatus
 
-from ingredients.models import Ingredients
+from ingredients.models import Ingredient
 from recipes.models import Recipe, RecipeTags
 import json
 
@@ -63,7 +63,7 @@ def test_create_recipe(clients, expected, recipes, new_recipe, request):
         'id', flat=True)
     for tag in tags:
         assert tag in new_recipe.get('tags')
-    ingredients = Ingredients.objects.filter(recipes__id=data.get(
+    ingredients = Ingredient.objects.filter(recipes__id=data.get(
         'id')).values_list('id', flat=True)
     for ingredient in new_recipe.get('ingredients'):
         assert eval(ingredient).get('id') in ingredients

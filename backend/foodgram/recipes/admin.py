@@ -17,8 +17,6 @@ class RecipeAdmin(SiteAdmin):
         'cooking_time',
         'image',
         'author',
-        # 'tags',
-        # 'ingredients'
     )
     search_fields = ('name',)
     empty_value_display = settings.EMPTY_VALUE

@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from tags.models import Tag
-from ingredients.models import Ingredients
+from ingredients.models import Ingredient
 
 
 User = get_user_model()
@@ -73,7 +73,7 @@ class RecipeIngredients(models.Model):
         related_name='ingredients'
     )
     ingredient = models.ForeignKey(
-        Ingredients,
+        Ingredient,
         on_delete=models.CASCADE,
         related_name='recipes'
     )

@@ -7,7 +7,7 @@ from rest_framework.exceptions import NotAuthenticated
 from recipes.models import (Recipe, RecipeTags, RecipeIngredients,
                             FavoritedRecipe, ShoppingRecipe)
 from tags.models import Tag
-from ingredients.models import Ingredients
+from ingredients.models import Ingredient
 from users.serializers import UserSerializer
 
 
@@ -97,7 +97,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                 ingredient = eval(ingredient)
             id = ingredient.get('id')
             amount = ingredient.get('amount')
-            ingredient_id = get_object_or_404(Ingredients, id=id)
+            ingredient_id = get_object_or_404(Ingredient, id=id)
             RecipeIngredients.objects.create(
                 recipe=recipe, ingredient=ingredient_id, amount=amount
             )
@@ -120,7 +120,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         for ingredient in ingredients:
             id = ingredient.get('id')
             amount = ingredient.get('amount')
-            ingredient_id = get_object_or_404(Ingredients, id=id)
+            ingredient_id = get_object_or_404(Ingredient, id=id)
             RecipeIngredients.objects.create(
                 recipe=instance, ingredient=ingredient_id, amount=amount
             )

@@ -31,8 +31,7 @@ services:
     image: postgres:12
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-#    ports:
-#      - 5432:5432
+
     env_file:
       - ./.env
     healthcheck:
@@ -43,12 +42,7 @@ services:
 
   web:
     image: 1kovalevskiy/foodgram_web:latest
-#    build:
-#      context: ../backend
-#      dockerfile: Dockerfile
     restart: always
-#    ports:
-#      - 8000:8000
     depends_on:
       - postgres
     env_file:
@@ -64,4 +58,3 @@ services:
     volumes:
       - media_value:/foodgram/media/
       - static_value:/foodgram/static/
-

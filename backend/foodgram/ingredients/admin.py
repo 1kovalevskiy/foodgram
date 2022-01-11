@@ -1,15 +1,15 @@
 from django.conf import settings
 from django.contrib import admin
 
-from ingredients.models import Ingredients
+from ingredients.models import Ingredient
 
 
 class SiteAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Ingredients)
-class UserAdmin(SiteAdmin):
+@admin.register(Ingredient)
+class IngredientAdmin(SiteAdmin):
     list_display = (
         'pk',
         'name',

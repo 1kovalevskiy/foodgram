@@ -1,7 +1,7 @@
 import django_filters
 from django_filters import rest_framework as filters
 
-from ingredients.models import Ingredients
+from ingredients.models import Ingredient
 
 
 class CustomFilter(filters.FilterSet):
@@ -13,5 +13,5 @@ class CustomFilter(filters.FilterSet):
         })
 
     class Meta:
-        model = Ingredients
+        model = Ingredient
         fields = ('name', )
