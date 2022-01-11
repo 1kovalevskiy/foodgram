@@ -2,8 +2,10 @@ from django.db import models
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=200)
-    measurement_unit = models.CharField(max_length=20)
+    name = models.CharField(max_length=200, verbose_name='ingredient name')
+    measurement_unit = models.CharField(
+        max_length=20, verbose_name='measurement unit of ingredient'
+    )
 
     class Meta:
         verbose_name = "ingredient"

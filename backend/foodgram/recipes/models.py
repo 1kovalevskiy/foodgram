@@ -19,19 +19,21 @@ def validate_nonzero(value):
 
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=200)
-    text = models.TextField()
+    name = models.CharField(max_length=200, verbose_name='recipe name')
+    text = models.TextField(verbose_name='main recipe')
     cooking_time = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), validate_nonzero]
+        validators=[MinValueValidator(1), validate_nonzero],
+        verbose_name='time of cooking'
     )
-    image = models.ImageField()
+    image = models.ImageField(verbose_name='the image in recipe')
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='recipes',
+        verbose_name='recipe author'
     )
     tags = models.ManyToManyField(
-        Tag, through='RecipeTags'
+        Tag, through='RecipeTags', verbose_name='recipe tags'
     )
 
     class Meta:
@@ -49,10 +51,12 @@ class RecipeTags(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
+        verbose_name='recipe for tag'
     )
     tag = models.ForeignKey(
         Tag,
         on_delete=models.CASCADE,
+        verbose_name='tag of recipe'
     )
 
     class Meta:
@@ -70,15 +74,18 @@ class RecipeIngredients(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='ingredients'
+        related_name='ingredients',
+        verbose_name='recipe of ingredient'
     )
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        related_name='recipes'
+        related_name='recipes',
+        verbose_name='ingredient of recipe'
     )
     amount = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), validate_nonzero]
+        validators=[MinValueValidator(1), validate_nonzero],
+        verbose_name='amount of ingredient in recipe'
     )
 
     class Meta:
@@ -94,10 +101,14 @@ class RecipeIngredients(models.Model):
 
 class FavoritedRecipe(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='favorited'
+        User, on_delete=models.CASCADE,
+        related_name='favorited',
+        verbose_name='favorited user of recipe'
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name='favorited_user'
+        Recipe, on_delete=models.CASCADE,
+        related_name='favorited_user',
+        verbose_name='recipe for favorited'
     )
 
     class Meta:
@@ -113,10 +124,16 @@ class FavoritedRecipe(models.Model):
 
 class ShoppingRecipe(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='shopping'
+        User,
+        on_delete=models.CASCADE,
+        related_name='shopping',
+        verbose_name='shopping user of recipe'
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name='shopped_user'
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='shopped_user',
+        verbose_name='recipe for shopping list of user'
     )
 
     class Meta:

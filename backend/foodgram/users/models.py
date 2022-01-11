@@ -5,7 +5,7 @@ from django.db import models
 class User(AbstractUser):
     email = models.EmailField(
         verbose_name=('email address'),
-        unique=True,
+        unique=True
     )
 
     class Meta:
@@ -16,10 +16,18 @@ class User(AbstractUser):
 
 
 class Follow(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name="follower")
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               related_name="following")
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="follower",
+        verbose_name='following user'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="following",
+        verbose_name='followed user'
+    )
 
     class Meta:
         constraints = [

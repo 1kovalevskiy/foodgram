@@ -3,9 +3,9 @@ from colorfield.fields import ColorField
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
-    color = ColorField()
-    slug = models.SlugField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name='tag name')
+    color = ColorField(verbose_name='tag color')
+    slug = models.SlugField(max_length=200, verbose_name='tag slug')
 
     class Meta:
         verbose_name = "tag"
