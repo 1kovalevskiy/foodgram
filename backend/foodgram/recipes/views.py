@@ -1,7 +1,9 @@
 import csv
+
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action, api_view
@@ -87,15 +89,14 @@ def download_shopping_cart(request):
     if request.user.is_anonymous:
         return Response(status=401)
     user = get_object_or_404(User, username=request.user)
-    response_dict = {}
-    ingredients = get_list_or_404(
-        RecipeIngredients, recipe__shopped_user__user=user)
-    for i in ingredients:
-        name = f"{i.ingredient.name}, {i.ingredient.measurement_unit}"
-        if response_dict.get(name) is None:
-            response_dict[name] = int(i.amount)
-        elif response_dict.get(name):
-            response_dict[name] += int(i.amount)
+    ingredients = RecipeIngredients.objects.filter(
+        recipe__shopped_user__user=user
+    ).values(
+        'ingredient__name', 'ingredient__measurement_unit'
+    ).annotate(ingredient_amount=Sum('amount')).values_list(
+        'ingredient__name', 'ingredient_amount', 'ingredient__measurement_unit'
+    )
+    # https://docs.djangoproject.com/en/4.0/howto/outputting-csv/
     response = HttpResponse(
         content_type='text/csv',
         headers={
@@ -104,6 +105,6 @@ def download_shopping_cart(request):
     )
     response.write(u'\ufeff'.encode('utf8'))
     writer = csv.writer(response)
-    for key, value in response_dict.items():
-        writer.writerow([key, value])
+    for product in list(ingredients):
+        writer.writerow(product)
     return response
