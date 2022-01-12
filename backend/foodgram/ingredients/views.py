@@ -21,7 +21,5 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
         """
         name = self.request.query_params.get('name')
         if name is not None:
-            queryset = Ingredient.objects.filter(name__icontains=name)
-        else:
-            queryset = Ingredient.objects.all()
-        return queryset
+            return Ingredient.objects.filter(name__icontains=name)
+        return Ingredient.objects.all()
