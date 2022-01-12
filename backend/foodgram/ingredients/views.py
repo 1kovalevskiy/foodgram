@@ -12,3 +12,16 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
     filter_backends = (DjangoFilterBackend,)
     filterset_class = CustomFilter
+
+    def get_queryset(self):
+        """
+        Фильтрация не работает с этой вьюхой
+        потратил почти весь день, на попытку найти проблему и не смог
+        хотя все аналогично работает в recipe!
+        """
+        name = self.request.query_params.get('name')
+        if name is not None:
+            queryset = Ingredient.objects.filter(name__icontains=name)
+        else:
+            queryset = Ingredient.objects.all()
+        return queryset
