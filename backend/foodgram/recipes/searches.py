@@ -6,7 +6,7 @@ from recipes.models import Recipe
 
 class CustomFilter(rest_framework.FilterSet):
     author = rest_framework.CharFilter(
-        field_name='author__username'
+        field_name='author__id'
     )
     tags = rest_framework.AllValuesMultipleFilter(
         field_name='tags__slug'

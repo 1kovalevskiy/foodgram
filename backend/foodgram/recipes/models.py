@@ -35,10 +35,15 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(
         Tag, through='RecipeTags', verbose_name='recipe tags'
     )
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='publication date'
+    )
 
     class Meta:
         verbose_name = "recipe"
         verbose_name_plural = "recipes"
+        ordering = ['-pub_date']
 
     def __str__(self):
         return self.name[:15]
