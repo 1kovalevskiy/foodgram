@@ -12,7 +12,7 @@ from users.serializers import UserSerializer
 
 
 class RecipeTagSerializer(serializers.ModelSerializer):
-    id = serializers.CharField()
+    id = serializers.IntegerField()
     name = serializers.CharField()
     color = serializers.CharField()
     slug = serializers.SlugField()
@@ -23,7 +23,7 @@ class RecipeTagSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-    id = serializers.CharField(source='ingredient.id')
+    id = serializers.IntegerField(source='ingredient.id')
     name = serializers.CharField(source='ingredient.name')
     measurement_unit = serializers.CharField(
         source='ingredient.measurement_unit'
