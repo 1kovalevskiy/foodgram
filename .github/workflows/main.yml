@@ -89,10 +89,12 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }} # Если ваш ssh-ключ защищён фразой-паролем
         script: |
-          cd /home/kovalevskiyn/foodgram-project-react/infra
+          git clone https://github.com/1kovalevskiy/foodgram.git
+          cd /home/kovalevskiyn/foodgram/infra
           git pull
+          cp .env.sample .env
           sudo docker stop $(sudo docker ps -a -q)
-          sudo docker-compose rm 1kovalevskiy/foodgram:latest
+          sudo docker-compose rm 1kovalevskiy/foodgram_web:latest
           sudo docker pull 1kovalevskiy/foodgram_web:latest
           sudo docker-compose up -d
 
