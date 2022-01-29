@@ -24,5 +24,8 @@
 - Proxy Nginx
 - Контейнеризация с помощью Docker
 
+## Техническая информация
+Вся структура API представлена в [OpenAPI](https://github.com/1kovalevskiy/foodgram/blob/master/docs/openapi-schema.yml)
+
 ## Покрытие тестами
 [![](https://github.com/1kovalevskiy/foodgram-project-react/blob/master/pytest.png)](https://github.com/1kovalevskiy/foodgram-project-react/blob/master/pytest.pnghttp://)
