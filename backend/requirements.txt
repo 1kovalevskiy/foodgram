@@ -9,7 +9,7 @@ coverage==6.2
 coverage-badge==1.1.0
 cryptography==36.0.0
 defusedxml==0.7.1
-Django==3.2.9
+Django==3.2.14
 django-3-jet==1.0.8
 django-colorfield==0.5.0
 django-filter==21.1
