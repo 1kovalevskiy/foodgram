@@ -18,7 +18,7 @@
 - Запустить `docker-compose up -d`
 
 ## Тестовый сервер
-[Тестовый сервер (не работает)](http://kovalevskiy.works) http://kovalevskiy.works
+[Тестовый сервер](http://foodgram.kovalevskiy.xyz)
 
 ## Технологии
 - Готовый "фронт" на React
